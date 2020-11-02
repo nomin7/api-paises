@@ -19,7 +19,7 @@
                 <p><b>Region: </b>{{item.region}}</p>
                 <p><b>Sub-Region: </b>{{item.subregion}}</p>
                 <p class="card-text">
-                  <b>Pobliacion: </b><small class="text-muted">{{item.population}}</small>
+                  <b>Pobliacion: </b><small class="text-muted">{{item.population.toLocaleString()}}</small>
                 </p>
               </div>
             </div>

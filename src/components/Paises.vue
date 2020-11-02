@@ -1,12 +1,12 @@
 <template>
     <div>
         <div class="row">
-            <input type="text" class="form-control col-12 col-md-9" placeholder="Buscar...">
+            <input type="text" class="form-control col-12 col-md-9" placeholder="Buscar..." v-model="buscador">
              <b-form-select class="col-12 col-md-3" v-model="selectRegion" :options="regiones" @change="getRegiones()"></b-form-select>
         </div>
 
     <div class="row mt-5">
-      <div class="col-6 col-md-4" v-for="(item, index) in paises" :key="index">
+      <div class="col-6 col-md-4" v-for="(item, index) in FiltroPaises" :key="index">
         <div class="card mb-3" style="max-width: 540px">
           <div class="row no-gutters">
             <div class="col-md-4">
@@ -26,6 +26,7 @@
           </div>
         </div>
       </div>
+      <span v-if="FiltroPaises == ''">No se encontro ningun pais</span>
     </div>
 
     </div>
@@ -37,10 +38,10 @@ export default {
     name: 'Paises',
     data() {
       return {
+        buscador: '',
         paises: [],
-        selectRegion: null,
+        selectRegion: 'americas',
         regiones: [
-          {value: null, text: 'Seleccione una region'},
           {value: 'americas', text: 'America'},
           {value: 'europe', text: 'Europa'},
           {value: 'africa', text: 'Africa'},
@@ -49,13 +50,17 @@ export default {
         ]
       }
     },
+
+    mounted() {
+      this.getRegiones()
+    },
+
     methods: {
       getRegiones(){
         if (this.selectRegion !== null) {
           const url = `https://restcountries.eu/rest/v2/region/${this.selectRegion}`;
           axios.get(url)
           .then(res => {
-            console.log(res)
             this.paises = res.data
           })
           .catch(err => {
@@ -68,7 +73,15 @@ export default {
     },
 
     computed: {
-      
+      FiltroPaises(){
+        if (this.buscador !== '' && this.paises !== []) {
+          return this.paises.filter((pais) => {
+            return this.buscador.toLowerCase().split(' ').every(v => pais.name.toLowerCase().includes(v));
+          });
+        }else{
+          return this.paises
+        }
+      }
     },
 }
 </script>

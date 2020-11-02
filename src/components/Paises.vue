@@ -49,5 +49,22 @@ export default {
         ]
       }
     },
+    methods: {
+      getRegiones(){
+        const url = `https://restcountries.eu/rest/v2/region/${this.selectRegion}`;
+        axios.get(url)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.error(err); 
+        })
+
+      }
+    },
+
+    computed: {
+      
+    },
 }
 </script>

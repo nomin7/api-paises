@@ -6,20 +6,20 @@
         </div>
 
     <div class="row mt-5">
-      <div class="col-6 col-md-4">
+      <div class="col-6 col-md-4" v-for="(item, index) in paises" :key="index">
         <div class="card mb-3" style="max-width: 540px">
           <div class="row no-gutters">
             <div class="col-md-4">
-              <img src="" class="card-img" alt="" />
+              <img :src="item.flag" class="card-img" alt="" />
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">El Salvador</h5>
-                <p><b>Capital: </b></p>
-                <p><b>Region: </b></p>
-                <p><b>Sub-Region: </b></p>
+                <h5 class="card-title">{{item.name}}</h5>
+                <p><b>Capital: </b>{{item.capital}}</p>
+                <p><b>Region: </b>{{item.region}}</p>
+                <p><b>Sub-Region: </b>{{item.subregion}}</p>
                 <p class="card-text">
-                  <b>Pobliacion: </b><small class="text-muted"></small>
+                  <b>Pobliacion: </b><small class="text-muted">{{item.population}}</small>
                 </p>
               </div>
             </div>
@@ -56,6 +56,7 @@ export default {
           axios.get(url)
           .then(res => {
             console.log(res)
+            this.paises = res.data
           })
           .catch(err => {
             console.error(err); 

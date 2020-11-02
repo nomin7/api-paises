@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <input type="text" class="form-control col-12 col-md-9" placeholder="Buscar...">
-             <b-form-select class="col-12 col-md-3" v-model="selectRegion" :options="regiones"></b-form-select>
+             <b-form-select class="col-12 col-md-3" v-model="selectRegion" :options="regiones" @change="getRegiones()"></b-form-select>
         </div>
 
     <div class="row mt-5">
@@ -51,14 +51,17 @@ export default {
     },
     methods: {
       getRegiones(){
-        const url = `https://restcountries.eu/rest/v2/region/${this.selectRegion}`;
-        axios.get(url)
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.error(err); 
-        })
+        if (this.selectRegion !== null) {
+          const url = `https://restcountries.eu/rest/v2/region/${this.selectRegion}`;
+          axios.get(url)
+          .then(res => {
+            console.log(res)
+          })
+          .catch(err => {
+            console.error(err); 
+          })
+        }
+        
 
       }
     },
